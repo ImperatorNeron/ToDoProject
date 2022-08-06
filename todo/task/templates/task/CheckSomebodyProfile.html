@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="profile-container" style="padding-bottom: 25px;">
+    {% include 'include/_check_your_somebody_profiles.html' %}
+    <div class="score">
+        <strong>Кількість балів:</strong> <br>{{ profile.score }}
+    </div>
+</div>
+{% include "include/_footer.html" %}
+{% endblock %}

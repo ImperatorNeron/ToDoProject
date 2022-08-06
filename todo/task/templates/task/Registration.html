@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="header">
+    <div class="menu-header" style="font-size: 25px; font-weight: bold; border-bottom: 2px solid gray">Меню</div>
+    <div class="nav-first-part">
+        <a href="{% url 'main_page' %}">Повернутися назад</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block main %}
+<form method="post" class="login-class">
+    {% csrf_token %}
+    {% for item in form %}
+    <label>{{ item.label }}</label>
+    {{ item }}
+    {% if item.errors %}
+    <!-- Розібратися з помилками -->
+    <div class="error" style="margin: -10px 10px -10px -10px;">
+        {{ item.errors }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    <input class="login-btn" type="submit" value="Зареєструватися">
+</form>
+{% endblock %}

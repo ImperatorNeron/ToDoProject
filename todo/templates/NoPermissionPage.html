@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="header">
+    <div class="menu-header" style="font-size: 25px; font-weight: bold; border-bottom: 2px solid gray">Меню</div>
+    <div class="nav-first-part">
+        <a href="{% url 'main_page' %}">Повернутися до головної сторінки</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="permission"> Такої сторінки не існує або ви не маєте доступу до неї!</div>
+{% include "include/_footer.html" %}
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block main %}
+{% load task_tags %}
+<div class="index-container">
+    <div class="index-text">
+        Проект написаний на фреймворку Django. Тестовий сайт.
+    </div>
+    <div class="first-p" style="padding-bottom: 150px; border-bottom: 5px solid white; margin-bottom: 150px;">
+        {% photo_tag 1 as img %}
+        <img height="300px" width="500px"
+             src="{{ img.photo.url }}">
+        <div class="info-container">
+            <div class="index-title">Про сайт</div>
+            <div class="index-story">Цей сайт слугує особистим записником задач. Він містить потрібний функціонал та має
+                можливість вести аккаунт для змагання з іншими учасниками.
+            </div>
+        </div>
+    </div>
+    <div class="first-p" style="margin-bottom: 50px;">
+        <div class="info-container">
+            <div class="index-title">Про завдання</div>
+            <div class="index-story">У вас з'являється робоче місце. Тут будуть знаходитися всі ваші завдання.
+                Натисніть кнопку "Додати завдання" та розпочніть виконувати їх вже сьогодні.
+            </div>
+        </div>
+        {% photo_tag 2 as img %}
+        <img height="300px" width="500px"
+             src="{{ img.photo.url }}">
+    </div>
+    <div class="first-p" style="padding-bottom: 150px; border-bottom: 5px solid white; margin-bottom: 150px;">
+        {% photo_tag 3 as img %}
+        <img height="300px" width="500px"
+             src="{{ img.photo.url }}">
+        <div class="info-container">
+            <div class="index-title">Про редагування</div>
+            <div class="index-story">Ви можете змінити термін виконання або взагалі змінити саме завдання за допомогою
+                кнопки редагувати. Після успішного виконання можна видалити завдання або позначити як "Виконане".
+            </div>
+        </div>
+    </div>
+    <div class="first-p" style="padding-bottom: 150px; border-bottom: 5px solid white; margin-bottom: 150px;">
+        <div class="info-container">
+            <div class="index-title">Про рейтинг</div>
+            <div class="index-story">Також ви можете позмагатися з іншими учасниками сайту,
+                виконуючи СВОЇ завдання та отримуючи
+                бали. Ваші результати зберігаються в профілі та можуть попасти в рейтинг.
+            </div>
+        </div>
+        {% photo_tag 4 as img %}
+        <img height="300px" width="500px"
+             src="{{ img.photo.url }}">
+    </div>
+    <div class="first-p" style="padding-bottom: 150px; border-bottom: 5px solid white; margin-bottom: 150px;">
+        {% photo_tag 5 as img %}
+        <img height="300px" width="500px"
+             src="{{ img.photo.url }}">
+        <div class="info-container">
+            <div class="index-title">Про профіль</div>
+            <div class="index-story">Фінальним бонусом є те, що ви можете додати інформацію
+                про себе в профілі, редагувати її та переглядати профілі учасників, які потрапили в рейтинг.
+            </div>
+        </div>
+    </div>
+    <div class="reg-log-container">
+        <div class="registration-login-container">
+            {% photo_tag 6 as img %}
+            <img class="rl-img" src="{{ img.photo.url }}"
+                 height="150px" width="150px">
+            <div class="registration-login-container-title">
+                Маєте аккаунт? Ласкаво просимо!
+            </div>
+            <a class="rl-btn" href="{% url 'login' %}">Увійти</a>
+        </div>
+         <div class="registration-login-container">
+             {% photo_tag 7 as img %}
+            <img class="rl-img" src="{{ img.photo.url }}"
+                 height="150px" width="150px">
+            <div class="registration-login-container-title">
+                Не маєте аккаунту? Ласкаво просимо!
+            </div>
+            <a class="rl-btn" href="{% url 'registration' %}">Зареєструватися</a>
+        </div>
+    </div>
+</div>
+{% include 'include/_footer.html' %}
+{% endblock %}
+
+<!--
+Фінальним бонусом є те, що ви можете додати інформацію
+про себе в профілі, редагувати її та переглядати профілі учасників, які потрапили в рейтинг.
+-->

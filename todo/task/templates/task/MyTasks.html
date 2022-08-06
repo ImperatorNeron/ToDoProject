@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block main %}
+{% load task_tags %}
+<div class="main-body">
+    <form class="search-form" method="get">
+        <input class="search-field" type="text" name="search-area" value="{{ search_input }}" autocomplete="off">
+        <input class="search-btn" type="submit" value="Search">
+    </form>
+    <div class="all-btn">
+        <a class="add-btn" href="{% url 'task_create' %}">Додати завдання</a>
+        <a class="add-btn" href="{% url 'DeleteDoneTasks' %}">Видалити виконані завдання</a>
+    </div>
+    <div class="done-task">
+        <div class="done">Виконано: {{ done }}</div>
+        <div class="all">Усіх: {{ all }}</div>
+    </div>
+    <div class="cards">
+        {% if tasks|length > 0 %}
+        {% for task in tasks %}
+        <div class="card" {% if task.complete %} style="opacity: 0.7;" {% endif %}>
+            {% if not task.title %}
+            <div class="card-header" style="color: rgb(189, 189, 189);">
+                Без назви
+            </div>
+            {% else %}
+            {% if task.complete %}
+            <div class="card-header" style="text-decoration: line-through;">
+                {{ task.title }}
+            </div>
+            {% else %}
+            <div class="card-header">
+                {{ task.title }}
+            </div>
+            {% endif %}
+            {% endif %}
+            {% if not task.description %}
+            <div class="main" style="color: rgb(189, 189, 189);">
+                Без опису
+            </div>
+            {% else %}
+            <div class="main">
+                {{ task.description|linebreaks }}
+            </div>
+            {% endif %}
+            <div class="card-footer">
+                <div class="task-info">
+                    <div class="first-part">
+                        Deadline: {{ task.to_do_date }}
+                    </div>
+                </div>
+                <div class="settings-btn">
+                    <a class="btn complete" href="{% url 'complete' task.pk %}">
+                        {% if task.complete %}
+                        Позначити як не виконане
+                        {% else %}
+                        Позначити як виконане
+                        {% endif %}
+                    </a>
+                    <a class="btn edit" href="{% url 'edit_task' task.pk %}">Редагувати</a>
+                    <a class="btn delete" href="{% url 'task_delete' task.pk %}">Видалити</a>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+        {% else %}
+        <div class="card-empty">
+            <p class="empty"> Створіть власні завдання та виконуйте їх</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% include "include/_footer.html" %}
+{% endblock %}

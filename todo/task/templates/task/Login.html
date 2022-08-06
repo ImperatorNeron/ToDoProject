@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="header">
+    <div class="nav-first-part">
+        <a href="{% url 'main_page' %}">Повернутися назад</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block main %}
+<form method="post" class="login-class">
+    {% csrf_token %}
+    {% for item in form %}
+    <label>{{ item.label }}</label>
+    {{ item }}
+    {% endfor %}
+    {% if form.errors %}
+    <div class="error">
+        Перевірте ім'я та пароль
+    </div>
+    {% endif %}
+    <input class="login-btn" type="submit" value="Увійти">
+</form>
+{% endblock %}

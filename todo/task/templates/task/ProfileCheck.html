@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="profile-container">
+    {% include 'include/_check_your_somebody_profiles.html' %}
+    <div class="score">
+        <strong>Ваша кількість балів:</strong> <br>{{ profile.score }}
+    </div>
+    <a class="profile-edit-btn" href="{% url 'edit' request.user.slug %}">Редагувати</a>
+</div>
+{% include "include/_footer.html" %}
+{% endblock %}

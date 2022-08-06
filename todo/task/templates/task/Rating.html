@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<!--https://w3schoolsua.github.io/html/html_css.html-->
+<div class="rating-container">
+    <div class="main-title">Рейтинг</div>
+    <div class="rating-title">
+        <div class="count-title">Місце:</div>
+        <div class="score-title">Кількість балів:</div>
+    </div>
+    {% for item in user_rating %}
+    <div class="rating-element">
+        <div class="info-rating count">{{ forloop.counter }}</div>
+        <div class="container-info-rating">
+            {% if item.photo %}
+            <img width="55px" height="55px" src=" {{ item.photo.url }}">
+            {% else %}
+            <img width="55px" height="55px"
+                 src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png">
+            {% endif %}
+            <a href="{% url 'check_somebody' item.slug %}" class="info-rating rating-user">{{ item.username }}</a>
+            <div class="info-rating rating-score">{{ item.score }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% if request.user.is_authenticated %}
+<div class="rating-container">
+    <div class="rating-title">
+        <div class="count-title">Ваше місце:</div>
+        <div class="score-title">Ваші бали:</div>
+    </div>
+    <div class="rating-element">
+        <div class="info-rating count">{{ you_position }}</div>
+        <div class="container-info-rating">
+            {% if request.user.photo %}
+            <img width="55px" height="55px" src=" {{ request.user.photo.url }}">
+            {% else %}
+            <img width="55px" height="55px"
+                 src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png">
+            {% endif %}
+            <a href="{% url 'check' request.user.slug %}" class="info-rating rating-user">{{ request.user.username }}</a>
+            <div class="info-rating rating-score">{{ request.user.score }}</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% include 'include/_footer.html' %}
+{% endblock %}
+

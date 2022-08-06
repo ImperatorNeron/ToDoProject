@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<form method="post" class="edit-container" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for item in form %}
+    {% if forloop.last %}
+    <div class="choose-file">
+        <label for="id_photo" class="file-label">{{ item.label }}</label>
+        {{ item }}
+    </div>
+    {% else %}
+    <label>{{ item.label }}</label>
+    {{ item }}
+    {% if item.errors %}
+    <div class="error" style="margin: -10px;">
+        {{ item.errors }}
+    </div>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <input class="edit-btn" type="submit" value="Зберегти">
+</form>
+<script>
+const file = document.querySelector('#id_photo');
+file.addEventListener('change', (e) => {
+  const [file] = e.target.files;
+  const { name: fileName, size } = file;
+  const fileSize = (size / 1000).toFixed(2);
+  const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+  document.querySelector('.file-label').textContent = fileNameAndSize;
+});
+
+</script>
+{% endblock %}

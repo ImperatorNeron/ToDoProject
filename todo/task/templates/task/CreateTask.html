@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block main %}
+<form method="post" class="form">
+    {% csrf_token %}
+    <div>
+        {% for item in form %}
+        <div class="form-element">
+            {{ item.label_tag }}
+            {{ item }}
+            {% if item.errors %}
+            <div class="error">
+                * Введіть коректне значення
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    <input class="btn-add-task" type="submit" value="Записати">
+</form>
+{% endblock %}

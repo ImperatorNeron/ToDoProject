@@ -1,0 +1,52 @@
+{% if profile.photo %}
+<div class="photo"><img width="120px" height="120px" src="{{ profile.photo.url }}"></div>
+{% else %}
+<div class="photo">
+    <img width="100px" height="100px"
+         src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png">
+</div>
+{% endif %}
+<!-- Додати іфи, якщо якихось даних немає -->
+<div class="profile-info">
+    <div class="username"><strong>Username:</strong> <br>{{ profile.username }}</div>
+    <div class="email"><strong>Електронна адреса:</strong>
+        <br>
+        {% if profile.email %}
+        {{ profile.email }}
+        {% else %}
+        <div style="color: gray;">Адресу не вказано</div>
+        {% endif %}
+    </div>
+    <div class="phone"><strong>Номер телефону:</strong>
+        {% if profile.phone %}
+        <br>{{ profile.phone }}
+        {% else %}
+        <div style="color: gray;">Номер телефону не вказано</div>
+        {% endif %}
+    </div>
+</div>
+<div class="fl_names">
+    <div class="surname"><strong>Прізвище:</strong>
+        {% if profile.last_name %}
+        <br>{{ profile.last_name }}
+        {% else %}
+        <div style="color: gray;">Прізвище не вказане</div>
+        {% endif %}
+    </div>
+    <div class="name"><strong>Ім'я:</strong>
+        {% if profile.first_name %}
+        <br>{{ profile.first_name }}
+        {% else %}
+        <div style="color: gray;">Ім'я не вказане</div>
+        {% endif %}
+    </div>
+</div>
+<div class="bio">
+    <strong>Біографія:</strong>
+    {% if profile.bio %}
+    <br>{{ profile.bio }}
+    {% else %}
+    <div style="color: gray;">Біографія не вказана</div>
+    {% endif %}
+</div>
+

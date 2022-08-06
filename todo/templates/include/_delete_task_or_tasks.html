@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<form method="post" class="container">
+    {% csrf_token %}
+    <div class="delete-title">
+        {{ text }}
+    </div>
+    <div class="delete-btn">
+        <input class="first-btn" type="submit" value="Так">
+        <a class="second-btn" href="{% url 'task_page' %}">Повернутися до завдань</a>
+    </div>
+</form>
+{% endblock %}
