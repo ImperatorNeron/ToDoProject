@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
 from .models import *
@@ -15,6 +15,8 @@ class CreateTaskForm(forms.ModelForm):
             'title': forms.TextInput(attrs={"class": "input_field inp", "placeholder": "Введіть назву завдання..."}),
             'description': forms.Textarea(
                 attrs={"class": "task_field inp", "placeholder": "Введіть суть завдання..."}),
+            # todo: for all python code use either double or single quotes.
+            # todo: use black, flake8 or pre-commit to do it automatically
             'to_do_date': forms.DateTimeInput(format='%Y-%m-%d %H:%M:%S',
                                               attrs={"class": "date_field inp", "placeholder": "DD.MM.YYYY hh:mm",
                                                      "type": "datetime-local"})
@@ -33,6 +35,8 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'password1', 'password2')
 
     def clean_password2(self):
+        # todo: i know its from django docs, but better naming helps to scale code
+        # todo: so use password and confirmed_password
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 != password2:
@@ -63,8 +67,13 @@ class ProfileEditForm(forms.ModelForm):
         }
 
     # Валідатори. Перевіряє на наявність усього, окрім букв
+    # todo: reuse functions, do not duplicate code, like this:
+    # def validate_name(self, name, error_message):
+    #     if re.search(r"\d", name) or re.search(r"\W", name) or re.search("_", name):
+    #         raise ValidationError(error_message)
     def clean_last_name(self):
         last_name = self.cleaned_data.get('last_name')
+        # addition: self.validate_name(last_name, "Прізвище не має містити цифри і різні знаки...")
         if re.search(r"\d", last_name) or re.search(r"\W", last_name) or re.search("_", last_name):
             raise ValidationError("Прізвище не має містити цифри і різні знаки...")
         return last_name

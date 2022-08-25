@@ -20,10 +20,18 @@ class Index(TemplateView):
 
 
 # Список усіх завдань
+# todo: use better naming, such as TaskView AND
+# class based views are recommended when you need to handle multiple requests at one point
+# check https://stackoverflow.com/questions/27688107/how-does-class-based-view-with-multiple-methods-work-with-urls-in-django
 class LookMyTasks(LoginRequiredMixin, ListView):
     template_name = "task/MyTasks.html"
     model = Task
     context_object_name = "tasks"
+
+    # todo: use django filter(if one's exists) for filtering by fields
+    # and queryset = ... or :
+    # def get_queryset(self):
+    #     return Task.objects.filter(user=self.request.user).order_by("complete", "-pk")
 
     # Фільтруємо по юзеру, виконуємо гет запит для поля з пошуком записів.
     # Рахуємо кількість виконаних задач, які є в списку
@@ -34,6 +42,7 @@ class LookMyTasks(LoginRequiredMixin, ListView):
         if search_input:
             context['tasks'] = context['tasks'].filter(title__contains=search_input)
         context['search_input'] = search_input
+        # todo: why do you use exact? complete=True
         context['done'] = Task.objects.filter(user=self.request.user, complete__exact=True).count()
         context['all'] = Task.objects.filter(user=self.request.user).count()
         return context
@@ -60,6 +69,8 @@ class DeleteTask(LoginRequiredMixin, DeleteView):
     # Якщо це не він, піднімаємо помилку
     def get_object(self, queryset=None):
         obj = super(DeleteTask, self).get_object()
+        # todo: that's cool that you raised error here
+        # but check if it could be solved just using get_queryset()
         if obj.user != self.request.user:
             raise Http404("Точно працює")
         return obj
@@ -73,6 +84,7 @@ class UpdateTask(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('task_page')
 
     # Так само як і DeleteTask
+    # todo: the same )0
     def get_object(self, queryset=None):
         obj = super(UpdateTask, self).get_object()
         if obj.user != self.request.user:
@@ -81,11 +93,13 @@ class UpdateTask(LoginRequiredMixin, UpdateView):
 
 
 # Позначити як виконане(або не виконано)
+# todo: pleeeeeease!!!!!! add it to TaskView class (dont mix functional and class-based methods in views)
 def complete(request, pk):
     # Перевірка юзера
     if request.user != Task.objects.get(pk=pk).user:
         raise Http404
     data = get_object_or_404(Task, pk=pk)
+    # todo: you have request.user, why getting it here
     person = get_object_or_404(CustomUser, username=data.user)
     # Виконали/не виконали
     # Додаємо і віднімаємо + зберігаємо для того, щоб при видаленні завдання не втрачався бал
@@ -161,10 +175,12 @@ class Rating(ListView):
 
     # видаємо перших 20 людей по балах(+ імені)
     def get_context_data(self, *, object_list=None, **kwargs):
+        # todo: remove getting all users
         all_user = CustomUser.objects.all()
         context = super().get_context_data(**kwargs)
         context['user_rating'] = context['user_rating'].order_by('-score', '-username')[:20]
         if self.request.user.is_authenticated:
+            # todo: use context['user_position']
             context['you_position'] = list(context['user_rating']).index(self.request.user) + 1
         return context
 
@@ -175,7 +191,7 @@ class CheckSomebodyProfile(DetailView):
     model = CustomUser
     context_object_name = 'profile'
 
-
+# todo: use redirect to tasks list if user has no permissions to one
 # Підгружаємо свій темплейт для 404 помилки
 def page_not_found_view(request, exception):
     return render(request, 'NoPermissionPage.html', status=404)

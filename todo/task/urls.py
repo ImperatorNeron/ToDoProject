@@ -2,6 +2,7 @@ from django.urls import path
 from .views import *
 from django.contrib.auth.views import LogoutView
 
+# todo: check and rename https://betterprogramming.pub/10-best-practices-for-naming-rest-api-endpoints-442ae592a3a0
 urlpatterns = [
     path('', Index.as_view(), name="main_page"),
     path('Tasks/', LookMyTasks.as_view(), name="task_page"),
